@@ -14,16 +14,28 @@ def load_reviews(folder_path, sentiment):
                 data.append((review, sentiment))
     return data
 
-# Função para limpar os textos das reviews
+# Função para limpar os textos das reviews (ref.https://github.com/dongjun-Lee/transfer-learning-text-tf/blob/master/data_utils.py)
 def clean_text(text):
-    text = text.lower() # Colocar em minúsculas
+    text = text.lower()                 # Colocar em minúsculas
     text = re.sub(r'[^\w\s]', '', text) # Remover pontuação
-    text = re.sub(r'\d+', '', text) # Remover números
+    text = re.sub(r'\d+', '', text)     # Remover números
     return text
 
-def tokenize_pad(texts, vocab_size = 10000, max_length = 200):
-    tokenizer = Tokenizer(num_words = 5000, oov = '<OOV>')
-    tokenizer.fit_on_texts(texts)
-    sequences = tokenizer.texts_to_sequences(texts)
-    pad_sequences = pad_sequences(sequences, maxlen = max_length)
-    return pad_sequences, tokenizer
+# (ref.https://github.com/yurayli/imdb_sentiment/blob/master/cnn.py)
+def tokenize(train, test, vocab_size=10000, max_length=200):
+    # Criar e ajustar o tokenizer no conjunto de treino
+    tokenizer = Tokenizer(num_words=vocab_size, oov_token="<OOV>")
+    tokenizer.fit_on_texts(train)
+
+    # Converter textos para sequências de inteiros
+    train_tokens = tokenizer.texts_to_sequences(train)
+    test_tokens = tokenizer.texts_to_sequences(test)
+
+    # Aplicar padding para uniformizar o comprimento
+    train_padded = pad_sequences(train_tokens, maxlen=max_length, padding="post", truncating="post")
+    test_padded = pad_sequences(test_tokens, maxlen=max_length, padding="post", truncating="post")
+
+    return train_padded, test_padded, tokenizer
+
+
+#(ref.https://github.com/openai/generating-reviews-discovering-sentiment/blob/master/encoder.py)
