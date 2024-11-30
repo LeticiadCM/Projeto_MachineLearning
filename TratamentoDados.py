@@ -1,7 +1,7 @@
 import re
 import os
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+from keras.preprocessing.text import Tokenizer
+from keras.utils import pad_sequences
 
 # Função para carregar todos os arquivos de treino e teste
 def load_reviews(folder_path, sentiment):
@@ -24,7 +24,7 @@ def clean_text(text):
 # (ref.https://github.com/yurayli/imdb_sentiment/blob/master/cnn.py)
 def tokenize(train, test, vocab_size=10000, max_length=200):
     # Criar e ajustar o tokenizer no conjunto de treino
-    tokenizer = Tokenizer(num_words=vocab_size, oov_token="<OOV>")
+    tokenizer = Tokenizer(vocab_size)
     tokenizer.fit_on_texts(train)
 
     # Converter textos para sequências de inteiros
@@ -32,8 +32,8 @@ def tokenize(train, test, vocab_size=10000, max_length=200):
     test_tokens = tokenizer.texts_to_sequences(test)
 
     # Aplicar padding para uniformizar o comprimento
-    train_padded = pad_sequences(train_tokens, maxlen=max_length, padding="post", truncating="post")
-    test_padded = pad_sequences(test_tokens, maxlen=max_length, padding="post", truncating="post")
+    train_padded = pad_sequences(train_tokens, max_length)
+    test_padded = pad_sequences(test_tokens, max_length)
 
     return train_padded, test_padded, tokenizer
 
