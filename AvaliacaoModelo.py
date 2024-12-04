@@ -94,8 +94,11 @@ def evaluate_model(model, pad_train, labels_train):
     ax_pr.set(title="Curva Precision-Recall Média", xlabel="Recall", ylabel="Precision")
     ax_pr.legend(loc="lower left")
 
+    # Mostrar e salvar gráficos
     plt.tight_layout()
-    plt.show()
+    plt.savefig(f"roc_pr_curves_{dt}.png", dpi=300, bbox_inches="tight")
+    plt.show(block=False)
+    plt.close()
        
     # Exportar relatório
     train_pred = model.predict(pad_train) > 0.5
