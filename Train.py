@@ -1,12 +1,10 @@
 import TratamentoDados
 import pandas as pd
 import os
-import datetime
-#import seaborn as sns
-#import matplotlib.pyplot as plt
+from datetime import datetime
 from TratamentoDados import load_reviews, clean_text, tokenize
 from TreinamentoModelo import build_model, train_model
-from sklearn.metrics import classification_report, confusion_matrix
+from AvaliacaoModelo import evaluate_model
 
 vocab_size = 10000  # Tamanho do vocabulário
 embedding_dim = 64  # Dimensão dos vetores de embedding
@@ -58,5 +56,4 @@ print(f"Formato dos dados de teste: {pad_test.shape}")
 results = model.evaluate(pad_test, labels_test, verbose=1)
 print(f"Test Loss: {results[0]}, Test Accuracy: {results[1]}")
 
-
- 
+evaluate_model(model, pad_train, labels_train)

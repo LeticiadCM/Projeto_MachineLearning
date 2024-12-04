@@ -1,15 +1,15 @@
-#Embedding: Transforma os índices das palavras em vetores de dimensão = embedding_dim
-#GlobalAveragePooling1D: Gera única representação para toda a review
-#Dense-relu: Adiciona não-linearidade para o aprendizado de padrões complexos
-#Dense-sigmoid: Gera saída entre 0 e 1
-#Adam: Otimizador que ajusta os pesos da rede neural para minimizar erros.
+# Embedding: Transforma os índices das palavras em vetores de dimensão = embedding_dim
+# GlobalAveragePooling1D: Gera única representação para toda a review
+# Dense-relu: Adiciona não-linearidade para o aprendizado de padrões complexos
+# Dense-sigmoid: Gera saída entre 0 e 1
+# Adam: Otimizador que ajusta os pesos da rede neural para minimizar erros.
 
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Embedding, Dense, GlobalAveragePooling1D, Dropout
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping
+from keras.models import Sequential
+from keras.layers import Embedding, Dense, GlobalAveragePooling1D, Dropout
+from keras.optimizers import Adam
+from keras.callbacks import EarlyStopping
 
-#Construção do modelo (ref.https://github.com/dongjun-Lee/transfer-learning-text-tf/blob/master/train.py)
+# Construção do modelo (ref.https://github.com/dongjun-Lee/transfer-learning-text-tf/blob/master/train.py)
 def build_model(vocab_size, embedding_dim, max_length):
     model = Sequential([
         Embedding(input_dim = vocab_size, output_dim = embedding_dim, input_length = max_length),
@@ -27,7 +27,7 @@ def build_model(vocab_size, embedding_dim, max_length):
 
 # Configurando o EarlyStopping
 early_stopping = EarlyStopping(
-    monitor='val_loss',         # Métrica a ser monitorada
+    monitor='val_accuracy',     # Métrica a ser monitorada
     patience=2,                 # Número de épocas sem melhora antes de parar
     restore_best_weights=True   # Restaurar os melhores pesos após parada
 )

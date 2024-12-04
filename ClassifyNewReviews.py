@@ -6,7 +6,7 @@ from TratamentoDados import clean_text
 
 def classify_reviews(model_path, tokenizer, max_length, input_file, output_file):
     
-    print("\nClassificação Automática de Novas Resenhas:")
+    print("\nClassificação de Novas Resenhas:")
     
     # Carregar o modelo treinado
     model = load_model(model_path)
