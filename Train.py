@@ -10,7 +10,7 @@ vocab_size = 10000  # Tamanho do vocabulário
 embedding_dim = 64  # Dimensão dos vetores de embedding
 max_length = 200    # Comprimento máximo das sequências
 batch_size = 32     # Tamanho do lote
-epochs = 5          # Número máximo de épocas
+epochs = 8          # Número máximo de épocas
 
 # Caminhos para os dados de treino e teste
 train_pos_path = os.path.join("C:\\Users\\letic\\OneDrive\\Documentos\\AprendizadodeMaquina\\aclImdb_v1\\", 'train', 'pos')
