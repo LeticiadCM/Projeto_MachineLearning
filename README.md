@@ -6,7 +6,19 @@
 - **Pedro Ives Silva Santos** - RA: 
 
 ## 📚 Tema do Projeto
-Análise de Sentimentos em Resenhas de Filmes utilizando Redes Neurais e Word Embeddings.
+Análise de Sentimentos em Resenhas de Filmes utilizando Redes Neurais.
 
 ### Linguagem utilizada: Python 
+
+### Bibliotecas utilizadas:
+- Keras;
+- Matplotlib;
+- Numpy;
+- OS;
+- Pandas;
+- Scikeras;
+- Sklearn;
+
+
+
 
