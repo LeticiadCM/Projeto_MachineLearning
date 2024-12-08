@@ -14,7 +14,8 @@ def evaluate_model(model, pad_train, labels_train):
     X = pad_train 
     y = labels_train
     n_splits = 6  # Número de divisões para validação cruzada
-
+    dt = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    
     # Configuração do KFold
     cv = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
 
@@ -105,7 +106,6 @@ def evaluate_model(model, pad_train, labels_train):
     report = classification_report(labels_train, train_pred, target_names = ["Negativo", "Positivo"], output_dict = True)
     report_df = pd.DataFrame(report).transpose()
     
-    dt = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     report_df.to_csv(f"classification_report{dt}.csv", index=True)
     print(f"Relatório de classificação exportado como classification_report{dt}.csv")
     

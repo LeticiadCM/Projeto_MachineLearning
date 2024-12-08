@@ -1,4 +1,3 @@
-import TratamentoDados
 import pandas as pd
 import os
 from datetime import datetime
@@ -10,7 +9,7 @@ vocab_size = 10000  # Tamanho do vocabulário
 embedding_dim = 64  # Dimensão dos vetores de embedding
 max_length = 200    # Comprimento máximo das sequências
 batch_size = 32     # Tamanho do lote
-epochs = 5          # Número máximo de épocas
+epochs = 8          # Número máximo de épocas
 
 # Caminhos para os dados de treino e teste
 train_pos_path = os.path.join("C:\\Users\\letic\\OneDrive\\Documentos\\AprendizadodeMaquina\\aclImdb_v1\\", 'train', 'pos')
@@ -48,7 +47,10 @@ model = build_model(vocab_size, embedding_dim, max_length)
 history = train_model(model, pad_train, labels_train, pad_test, labels_test, epochs, batch_size)
 
 # Salvar o modelo treinado
-model.save(f"ModeloAnaliseDeSentimentos{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.h5")
+model_path = f"ModeloAnaliseDeSentimentos_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.h5"
+model.save(model_path)
+    
+print(f"Model salvo em {model_path}.")
 
 print(f"Formato dos dados de treino: {pad_train.shape}")
 print(f"Formato dos dados de teste: {pad_test.shape}")
