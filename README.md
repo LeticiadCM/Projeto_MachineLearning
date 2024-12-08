@@ -19,6 +19,11 @@ Análise de Sentimentos em Resenhas de Filmes utilizando Redes Neurais.
 - Scikeras;
 - Sklearn;
 
+### Descrição:
+aclImdb_v1: Arquivos utilizados nos testes e treinos;
+SavedFiles: Modelo e tokenizer treinados salvos.
+
+
 
 
 
