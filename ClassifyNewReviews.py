@@ -1,16 +1,12 @@
 import pandas as pd
 from keras.utils import pad_sequences
 from keras.preprocessing.text import Tokenizer
-from keras.models import load_model
 from TratamentoDados import clean_text
 
-def classify_reviews(model_path, tokenizer, max_length, input_file, output_file):
+def classify_reviews(model, tokenizer, max_length, input_file, output_file):
     
     print("\nClassificação de Novas Resenhas:")
-    
-    # Carregar o modelo treinado
-    model = load_model(model_path)
-    
+        
     # Ler resenhas do arquivo
     try:
         with open(input_file, 'r', encoding='utf-8') as file:
