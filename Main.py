@@ -1,38 +1,47 @@
-import pandas as pd
-from keras.utils import pad_sequences
+import ClassifyNewReviews
+import pickle
+from keras.models import load_model
 from keras.preprocessing.text import Tokenizer
-from TratamentoDados import clean_text
 
-def classify_reviews(model, tokenizer, max_length, input_file, output_file):
+# Caminho para o modelo treinado
+model_path = "C:\\Users\\letic\\OneDrive\\Documentos\\AprendizadodeMaquina\\Projeto_MachineLearning\\ModeloAnaliseDeSentimentos_2024-12-07_21-32-38.h5"
+tokenizer_path = "C:\\Users\\letic\\OneDrive\\Documentos\\AprendizadodeMaquina\\Projeto_MachineLearning\\tokenizer_2024-12-07_21-31-28.pkl"
+max_length = 200
+
+# Função para carregar o modelo e o tokenizador
+def load_tokenizer_and_model(model_path, tokenizer_path):
     
-    print("\nClassificação de Novas Resenhas:")
-        
-    # Ler resenhas do arquivo
+    # Carregar o modelo treinado
     try:
-        with open(input_file, 'r', encoding='utf-8') as file:
-            reviews = file.readlines()
-    except FileNotFoundError:
-        print("Arquivo não encontrado.")
-        return
-
-    # Pré-processar as resenhas
-    reviews_cleaned = [clean_text(review) for review in reviews]
-    pad_review = tokenizer.texts_to_sequences(reviews_cleaned)
-    pad_review = pad_sequences(pad_review, maxlen=max_length)
-
-    # Realizar previsões
-    predictions = model.predict(pad_review)
-    print("\nResultados da Classificação:")
+        model = load_model(model_path)
+        print("Modelo carregado com sucesso!")
+    except Exception as e:
+        print(f"Erro ao carregar o modelo: {e}")
     
-    sentiment = [] 
+    # Carregar o tokenizador
+    with open(tokenizer_path, 'rb') as f:
+        tokenizer = pickle.load(f)
+    print("\nTokenizador carregado.")
     
-    for i, review in enumerate(reviews):
-        #print({"Prediction":predictions[i]})
-        if(predictions[i] > 0.7):
-            sentiment.append("Positive")
-        else:
-            sentiment.append("Negative")
+    return model, tokenizer
+
+# Caminho do arquivo de entrada (resenhas) e arquivo de saída (resultados)
+input_file = input("\nDigite o caminho do arquivo contendo as resenhas: ")
+output_file = f"{input_file}_resultado_classificacao.txt"
+
+# Função principal
+def main():
+    try:
+        # Carregar modelo e tokenizador
+        model, tokenizer = load_tokenizer_and_model(model_path, tokenizer_path)
         
-    result_df = pd.DataFrame({"Review": reviews, "Sentiment": sentiment})
-    result_df.to_csv(output_file, index = False)
-    print(f"Resultados exportados para o arquivo '{output_file}'")
+        # Classificar as resenhas do arquivo de entrada
+        ClassifyNewReviews.classify_reviews(model, tokenizer, max_length, input_file, output_file)
+        
+        print(f"\nClassificação concluída. Resultados salvos em: {output_file}")
+    
+    except Exception as e:
+        print(f"\nErro durante a execução: {e}")
+
+if __name__ == "__main__":
+    main()
