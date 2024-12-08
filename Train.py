@@ -1,4 +1,3 @@
-import TratamentoDados
 import pandas as pd
 import os
 from datetime import datetime
@@ -48,7 +47,10 @@ model = build_model(vocab_size, embedding_dim, max_length)
 history = train_model(model, pad_train, labels_train, pad_test, labels_test, epochs, batch_size)
 
 # Salvar o modelo treinado
-model.save(f"ModeloAnaliseDeSentimentos{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.h5")
+model_path = f"ModeloAnaliseDeSentimentos_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.h5"
+model.save(model_path)
+    
+print(f"Model salvo em {model_path}.")
 
 print(f"Formato dos dados de treino: {pad_train.shape}")
 print(f"Formato dos dados de teste: {pad_test.shape}")
