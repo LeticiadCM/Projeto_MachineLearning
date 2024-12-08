@@ -1,4 +1,4 @@
-import ClassifyNewReviews
+import ClassifiqueNovasReviews
 import pickle
 from keras.models import load_model
 from keras.preprocessing.text import Tokenizer
@@ -36,7 +36,7 @@ def main():
         model, tokenizer = load_tokenizer_and_model(model_path, tokenizer_path)
         
         # Classificar as resenhas do arquivo de entrada
-        ClassifyNewReviews.classify_reviews(model, tokenizer, max_length, input_file, output_file)
+        ClassifiqueNovasReviews.classify_reviews(model, tokenizer, max_length, input_file, output_file)
         
         print(f"\nClassificação concluída. Resultados salvos em: {output_file}")
     
